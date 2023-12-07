@@ -32,27 +32,42 @@ w = random.normal((num_features,))
 b = random.normal(())
 
 # Visualization setup
-fig, ax = plt.subplots()
-ax.scatter(X[:, 0], y, color='blue', label='Data Points')  # Corrected line
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
 
-# Training with visualization
+# Scatter plot of data points
+ax1.scatter(X[:, 0], y, color='blue', label='Data Points')
+
+# Training with visualization and loss tracking
+losses = []
 for i in range(num_iters):
     grad_w, grad_b = grad_fn(w, b)
     w -= lr * grad_w
     b -= lr * grad_b
 
-    # Update plot every 50 iterations
+    # Collect loss for plotting
+    current_loss = loss_fn(w, b).item()
+    losses.append(current_loss)
+
+    # Update model plot every 50 iterations
     if i % 50 == 0:
         line_x = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)
         line_y = line_x * w[0] + b
-        ax.plot(line_x, line_y, label=f'Iteration {i}', alpha=0.5)
+        ax1.plot(line_x, line_y, label=f'Iteration {i}', alpha=0.5)
 
 # Final model plot
 line_x = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)
 line_y = line_x * w[0] + b
-ax.plot(line_x, line_y, color='red', label='Final Model')
-ax.legend()
-plt.xlabel('Feature 1')
-plt.ylabel('y')
-plt.title('Linear Regression with MLX')
+ax1.plot(line_x, line_y, color='red', label='Final Model')
+ax1.set_xlabel('Feature 1')
+ax1.set_ylabel('y')
+ax1.set_title('Linear Regression with MLX')
+ax1.legend()
+
+# Loss progression plot
+ax2.plot(losses)
+ax2.set_xlabel('Iteration')
+ax2.set_ylabel('Loss')
+ax2.set_title('Loss Progression')
+
+plt.tight_layout()
 plt.show()

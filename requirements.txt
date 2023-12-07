@@ -1,0 +1,8 @@
+safetensors
+huggingface-hub
+regex
+numpy
+tqdm
+mlx
+matplotlib
+Pillow  # This is the PIL library

@@ -26,12 +26,18 @@ grad_fn = mx.grad(loss_fn)
 # Optimization
 w = 1e-2 * mx.random.normal((num_features,))
 
-for _ in range(num_iters):
+for i in range(num_iters):
     grad = grad_fn(w)
     w -= lr * grad
     mx.eval(w)
 
-# Compute loss and verify result
-loss = loss_fn(w)
-error_norm = mx.sum(mx.square(w - w_star)).item() ** 0.5
-print(f"Loss {loss.item():.5f}, |w-w*| = {error_norm:.5f}")
+    # Print log every 1000 iterations
+    if i % 1000 == 0:
+        current_loss = loss_fn(w).item()
+        current_error_norm = mx.sum(mx.square(w - w_star)).item() ** 0.5
+        print(f"Iteration {i}: Loss {current_loss:.5f}, |w-w*| = {current_error_norm:.5f}")
+
+# Compute final loss and error norm
+final_loss = loss_fn(w)
+final_error_norm = mx.sum(mx.square(w - w_star)).item() ** 0.5
+print(f"Final Loss {final_loss.item():.5f}, |w-w*| = {final_error_norm:.5f}")

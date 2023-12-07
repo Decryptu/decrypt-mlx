@@ -6,7 +6,7 @@ import numpy as np
 # Problem metadata - with a twist
 num_features = 2  # Reduced for visualization
 num_examples = 100
-num_iters = 1000  # Reduced iterations for quicker demonstration
+num_iters = 500  # Reduced iterations for quicker demonstration
 lr = 0.1  # Increased learning rate
 
 # True parameters - now with a bias term
@@ -41,8 +41,8 @@ for i in range(num_iters):
     w -= lr * grad_w
     b -= lr * grad_b
 
-    # Update plot every 100 iterations
-    if i % 100 == 0:
+    # Update plot every 50 iterations
+    if i % 50 == 0:
         line_x = np.linspace(X[:, 0].min(), X[:, 0].max(), 100)
         line_y = line_x * w[0] + b
         ax.plot(line_x, line_y, label=f'Iteration {i}', alpha=0.5)

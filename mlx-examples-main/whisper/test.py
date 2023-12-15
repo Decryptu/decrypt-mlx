@@ -15,7 +15,7 @@ import whisper.torch_whisper as torch_whisper
 import whisper.decoding as decoding
 
 
-TEST_AUDIO = "whisper/assets/ls_test.flac"
+TEST_AUDIO = "whisper/assets/kanye.mp3"
 
 
 def forward_torch(model, mels, tokens):
